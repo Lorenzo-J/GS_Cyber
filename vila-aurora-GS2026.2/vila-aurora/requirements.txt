@@ -1,0 +1,10 @@
+flask>=3.0
+werkzeug>=3.0
+pyotp>=2.9
+paho-mqtt>=2.0
+scikit-learn>=1.4
+numpy
+psutil
+dkimpy
+reportlab
+matplotlib

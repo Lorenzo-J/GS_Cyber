@@ -1,0 +1,15 @@
+{
+ "mttd_s": {
+  "R-SQLI-01": {
+   "n": 6,
+   "media": 0.144,
+   "max": 0.238
+  },
+  "R-DEV-01": {
+   "n": 6,
+   "media": 0.666,
+   "max": 0.717
+  }
+ },
+ "nota": "mqtt: ts do log tem resolucao de 1 s; poll 0,25 s; fonte local (sem rede)"
+}

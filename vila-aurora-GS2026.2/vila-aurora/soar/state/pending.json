@@ -1,0 +1,9 @@
+[
+ {
+  "id": 1,
+  "action": "pump_off",
+  "reason": "R-VPN-01: IP de origem fora da lista conhecida; sem MFA",
+  "status": "pendente",
+  "ts": 1795006705.6432621
+ }
+]

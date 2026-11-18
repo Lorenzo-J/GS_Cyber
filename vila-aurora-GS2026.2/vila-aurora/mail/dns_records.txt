@@ -1,0 +1,4 @@
+; Dominio FICTICIO do projeto: vilaaurora.example (TLD .example reservado pela RFC 2606 - nao resolve na internet)
+vilaaurora.example.                      IN TXT "v=spf1 ip4:198.51.100.25 -all"
+s2026._domainkey.vilaaurora.example.      IN TXT "v=DKIM1; k=rsa; p=MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAoff3dGrZglpJXAoifMN+kzB6Yj4AbuY+bT1Pg75v6a9D7Xw+NOgISQz6VTYPHcAY1mO3BpGmc3QnFt84TpgNsRb2auHuOVRrRU882B8Ojj9rbEGjeZTMWiQY4COO0Jf8t568Y9n5Ix+zGkoEL5YXbstQTvKio1CzOS1ODPGCZEhhpbjkSwuC05lvRO1bJZ1pII5yq6LuYZVYzjWQ3SBn7wlwX9vGVdMw9DNGrXJOWqqLgmgCB0D2E9mkm49H2ADx+SZPyiUeKy45elwxMKVTqJ3CyeVh+ICOzL0pKlS+TUHGKGOttjPRkSuVLUk4c86zBcK3V/OGfjU06TqlG4yR+wIDAQAB"
+_dmarc.vilaaurora.example.               IN TXT "v=DMARC1; p=quarantine; pct=100; rua=mailto:dmarc@vilaaurora.example; adkim=s; aspf=s; fo=1"

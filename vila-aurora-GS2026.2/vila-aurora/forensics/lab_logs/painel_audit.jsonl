@@ -1,0 +1,1 @@
+{"ts": 1794948665.0621612, "event": "pump_schedule_change", "actor": "coord.fake(via-vpn)", "device": "bomba-escola", "action": "schedule: 02:30 OFF", "synthetic": true, "note": "painel de lab nao tem agendamento; registro simulado"}

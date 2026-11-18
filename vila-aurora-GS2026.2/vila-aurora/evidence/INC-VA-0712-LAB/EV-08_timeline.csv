@@ -1,0 +1,20 @@
+ts_utc,fonte,origem,evento,detalhe,tatica,tecnica
+2026-11-17 20:50:58.423,gophish,SINTETICO,email_sent,conteudo gerado por IA (simulado); conta ficticia,TA0001 Initial Access,T1566.002 Spearphishing Link
+2026-11-17 20:50:59.623,gophish,SINTETICO,link_clicked,coord.fake@vilaaurora.example ip=203.0.113.50,TA0002 Execution,T1204.001 User Execution: Malicious Link
+2026-11-17 20:51:00.623,gophish,SINTETICO,credentials_submitted,credencial FICTICIA; senha nao registrada ip=203.0.113.50,TA0006 Credential Access,T1598.003 / T1056.003 Web Portal Capture
+2026-11-17 20:51:01.624,vpn,SINTETICO,vpn_login,VPN legada: apenas senha ip=203.0.113.50,TA0001 Initial Access / TA0003 Persistence,T1078 Valid Accounts; T1133 External Remote Services
+2026-11-17 20:51:01.624,siem,REAL,ALERTA R-VPN-01,IP de origem fora da lista conhecida; sem MFA,Deteccao,T1078 Valid Accounts / T1133 External Remote Services
+2026-11-17 20:51:02.645,web,REAL,http_request,/historico?busca=' -> HTTP 500,TA0001 Initial Access / TA0009 Collection,T1190 Exploit Public-Facing Application
+2026-11-17 20:51:02.645,siem,REAL,ALERTA R-SQLI-02,sonda de SQLi (aspas) em: busca=',Deteccao,T1190 Exploit Public-Facing Application
+2026-11-17 20:51:03.249,web,REAL,http_request,/historico?busca=x' OR 1=1 -- -> HTTP 200,TA0001 Initial Access / TA0009 Collection,T1190 Exploit Public-Facing Application
+2026-11-17 20:51:03.249,siem,REAL,ALERTA R-SQLI-01,padrao de SQLi em: /historico?busca=x' OR 1=1 --,Deteccao,T1190 Exploit Public-Facing Application
+2026-11-17 20:51:03.853,web,REAL,http_request,"/historico?busca=zzz' UNION SELECT email, nome, cpf_sintetico, role FROM users - -> HTTP 200",TA0001 Initial Access / TA0009 Collection,T1190 Exploit Public-Facing Application; T1213 Data from Information Repositories
+2026-11-17 20:51:03.853,siem,REAL,ALERTA R-SQLI-01,"padrao de SQLi em: /historico?busca=zzz' UNION SELECT email, nome, cpf_sintetico, role FRO",Deteccao,T1190 Exploit Public-Facing Application
+2026-11-17 20:51:04.456,web,REAL,http_request,"/historico?busca=zzz' UNION SELECT name, sql, '', '' FROM sqlite_master -- -> HTTP 200",TA0001 Initial Access / TA0009 Collection,T1190 Exploit Public-Facing Application; T1213 Data from Information Repositories
+2026-11-17 20:51:04.456,siem,REAL,ALERTA R-SQLI-01,"padrao de SQLi em: /historico?busca=zzz' UNION SELECT name, sql, '', '' FROM sqlite_master",Deteccao,T1190 Exploit Public-Facing Application
+2026-11-17 20:51:05.062,painel_audit,SINTETICO,pump_schedule_change,painel de lab nao tem agendamento; registro simulado,ICS Impair Process Control,T0836 Modify Parameter (ICS)
+2026-11-17 20:51:05.062,siem,REAL,ALERTA R-ACT-01,ator fora do perfil esperado (coord.fake(via-vpn)),Deteccao,T0831 Manipulation of Control / T1565
+2026-11-17 20:51:06.000,broker-mqtt,REAL,tls_rejeitado,OpenSSL Error[0]: error:0A0000C7:SSL routines::peer did not return a certificate (comando ao atuador BLOQUEADO),ICS Impair Process Control (tentativa),T0855 Unauthorized Command Message
+2026-11-17 20:51:06.000,broker-mqtt,REAL,tls_rejeitado,OpenSSL Error[0]: error:0A000086:SSL routines::certificate verify failed (comando ao atuador BLOQUEADO),ICS Impair Process Control (tentativa),T0855 Unauthorized Command Message
+2026-11-17 20:51:06.000,siem,REAL,ALERTA R-DEV-01,conexao MQTT rejeitada por certificado invalido/ausente/revogado,Deteccao,T1078 / T1557 Adversary-in-the-Middle
+2026-11-17 20:51:06.000,siem,REAL,ALERTA R-DEV-01,conexao MQTT rejeitada por certificado invalido/ausente/revogado,Deteccao,T1078 / T1557 Adversary-in-the-Middle

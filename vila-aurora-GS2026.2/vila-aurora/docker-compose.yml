@@ -1,0 +1,47 @@
+# !!! NAO TESTADO no ambiente de desenvolvimento (sem Docker). Use apos: bash pki/make_pki.sh && bash vpn/gen_wg.sh
+# Redes separadas = segmentacao (iot / ops / admin). 'admin' e interna: sem rota para a internet.
+services:
+  broker-edge:
+    image: eclipse-mosquitto:2
+    volumes: ["./pki/out:/pki:ro", "./edge/mosquitto.container.conf:/mosquitto/config/mosquitto.conf:ro", "./edge/acl.conf:/mosquitto/config/acl.conf:ro"]
+    ports: ["8883:8883"]            # apenas na LAN do espaco comunitario; nunca publicar na internet
+    networks: [iot, ops]
+    restart: unless-stopped
+  edge-agent:
+    build: {context: ., dockerfile: docker/Dockerfile}
+    command: python edge/edge_agent.py --host broker-edge --cloud http://cloud-ingest:8090/ingest
+    environment: {PKI: /app/pki/out}
+    volumes: ["./pki/out:/app/pki/out:ro", "edge-data:/app/edge/data"]
+    depends_on: [broker-edge]
+    networks: [ops]
+    restart: unless-stopped
+  cloud-ingest:
+    build: {context: ., dockerfile: docker/Dockerfile}
+    command: python edge/cloud_ingest.py
+    networks: [ops, admin]
+  field-sim:
+    build: {context: ., dockerfile: docker/Dockerfile}
+    command: python field/field_sim.py --host broker-edge --duration 86400
+    environment: {PKI: /app/pki/out}
+    volumes: ["./pki/out:/app/pki/out:ro"]
+    networks: [iot]
+  painel-corrigido:
+    build: {context: ., dockerfile: docker/Dockerfile}
+    command: sh -c "python db/seed.py /data/panel_ok.db --pseudo && python panel/corrigido/app.py"
+    environment: {HOST: 0.0.0.0, PANEL_DB: /data/panel_ok.db, SECRET_KEY: "${PANEL_SECRET_KEY:?defina em .env (nao versionado)}"}
+    volumes: ["panel-data:/data"]
+    networks: [ops]
+  painel-vulneravel:            # SOMENTE para demonstrar o antes/depois. Nao ligar fora do lab.
+    build: {context: ., dockerfile: docker/Dockerfile}
+    command: sh -c "python db/seed.py /tmp/v.db && PANEL_DB=/tmp/v.db python panel/vulneravel/app.py"
+    environment: {HOST: 0.0.0.0}
+    profiles: ["lab-ofensivo"]
+    networks: [admin]
+  wireguard:
+    image: lscr.io/linuxserver/wireguard
+    cap_add: [NET_ADMIN]
+    ports: ["51820:51820/udp"]      # UNICA porta exposta a internet
+    volumes: ["./vpn/keys/wg0-hub.conf:/config/wg_confs/wg0.conf:ro"]
+    networks: [ops, admin]
+networks: {iot: {}, ops: {}, admin: {internal: true}}
+volumes: {edge-data: {}, panel-data: {}}

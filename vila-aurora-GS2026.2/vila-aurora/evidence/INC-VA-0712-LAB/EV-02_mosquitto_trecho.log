@@ -1,0 +1,6 @@
+1794948666: New connection from 127.0.0.1:33078 on port 8883.
+1794948666: OpenSSL Error[0]: error:0A0000C7:SSL routines::peer did not return a certificate
+1794948666: Client <unknown> disconnected: Protocol error.
+1794948666: New connection from 127.0.0.1:33080 on port 8883.
+1794948666: OpenSSL Error[0]: error:0A000086:SSL routines::certificate verify failed
+1794948666: Client <unknown> disconnected: Protocol error.

@@ -1,0 +1,4 @@
+<!-- NAO TESTADO. Adicionar ao ossec.conf do agente Wazuh na borda/painel. -->
+<localfile><log_format>json</log_format><location>/app/logs/web_ok.log</location></localfile>
+<localfile><log_format>json</log_format><location>/app/edge/data/edge.log</location></localfile>
+<localfile><log_format>syslog</log_format><location>/var/log/mosquitto/mosquitto.log</location></localfile>

@@ -1,0 +1,41 @@
+<!-- !!! NAO TESTADO NO AMBIENTE DE DESENVOLVIMENTO (sem Wazuh). Validar com /var/ossec/bin/wazuh-logtest antes de usar. -->
+<!-- Equivalentes das regras de siem/detect.py (RT-13). Logs JSON do painel/VPN/borda sao lidos via <localfile> com log_format json. -->
+<group name="vila_aurora,">
+  <rule id="100100" level="10">
+    <decoded_as>json</decoded_as>
+    <field name="event">vpn_login</field>
+    <field name="mfa">false</field>
+    <description>VA: login VPN sem MFA</description>
+    <mitre><id>T1078</id><id>T1133</id></mitre>
+  </rule>
+  <rule id="100101" level="12">
+    <if_sid>100100</if_sid>
+    <field name="src_ip" negate="yes">^198\.51\.100\.1[01]$</field>
+    <description>VA: login VPN anomalo (IP fora da lista de gerencia e sem MFA)</description>
+    <mitre><id>T1078</id></mitre>
+  </rule>
+  <rule id="100110" level="12">
+    <decoded_as>json</decoded_as>
+    <field name="path" type="pcre2">(?i)(union(\s|\+|%20)+select|\bor\b\s*1\s*=\s*1|sqlite_master|information_schema|--|/\*)</field>
+    <description>VA: padrao de SQL Injection no painel</description>
+    <mitre><id>T1190</id></mitre>
+  </rule>
+  <rule id="100111" level="10">
+    <decoded_as>json</decoded_as>
+    <field name="event">waf_block</field>
+    <description>VA: WAF/painel bloqueou entrada suspeita</description>
+    <mitre><id>T1190</id></mitre>
+  </rule>
+  <rule id="100120" level="10">
+    <match>certificate verify failed|peer did not return a certificate</match>
+    <description>VA: dispositivo MQTT sem certificado valido (ausente/forjado/revogado)</description>
+    <mitre><id>T1078</id></mitre>
+  </rule>
+  <rule id="100130" level="13">
+    <decoded_as>json</decoded_as>
+    <field name="event">pump_schedule_change|actuator_cmd</field>
+    <field name="actor" negate="yes">^edge-rule$|^coordenacao-aprovado$</field>
+    <description>VA: comando de atuador fora do perfil esperado</description>
+    <mitre><id>T1565.001</id></mitre>
+  </rule>
+</group>

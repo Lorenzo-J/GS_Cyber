@@ -1,0 +1,5 @@
+{"ts": 1795006705.6431255, "action": "kill_vpn_session", "peer": "peer-suspeito", "cmd": "wg set wg0 peer peer-suspeito remove", "dryrun": true, "auto": true}
+{"ts": 1795006705.64324, "action": "block_ip", "ip": "203.0.113.50", "nft": "nft add rule inet filter input ip saddr 203.0.113.50 drop", "auto": true}
+{"ts": 1795006705.643307, "action": "approval_requested", "id": 1, "what": "pump_off", "auto": false}
+{"ts": 1795006705.6433508, "action": "block_ip_recusado", "ip": "127.0.0.1", "motivo": "loopback/privado/gerencia: nunca bloquear automaticamente", "auto": true}
+{"ts": 1795006705.6433783, "action": "actuator_safe_mode", "device": "bomba-escola", "detail": "mantem ultimo estado seguro; bloqueia novos comandos remotos", "auto": true}

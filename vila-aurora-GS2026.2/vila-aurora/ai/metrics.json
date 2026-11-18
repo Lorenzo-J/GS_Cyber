@@ -1,0 +1,25 @@
+{
+  "amostras_treino(normais)": 6000,
+  "amostras_teste": 3000,
+  "anomalias_reais_no_teste": 180,
+  "limiar_padrao": {
+    "precisao": 0.213,
+    "revocacao": 0.95,
+    "f1": 0.348,
+    "falsos_positivos": 631,
+    "taxa_falso_positivo": 0.2238,
+    "falsos_negativos": 9,
+    "alertas": 802
+  },
+  "limiar_ajustado_na_validacao": {
+    "precisao": 0.602,
+    "revocacao": 0.839,
+    "f1": 0.701,
+    "falsos_positivos": 100,
+    "taxa_falso_positivo": 0.0355,
+    "falsos_negativos": 29,
+    "alertas": 251
+  },
+  "limiar_valor": 0.6492,
+  "aviso": "Dados sinteticos: metricas provavelmente otimistas; validar com telemetria real antes de producao."
+}

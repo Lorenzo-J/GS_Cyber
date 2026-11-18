@@ -1,0 +1,31 @@
+=== A) LINHA DE BASE: SEM regras nftables (tudo deve passar) ===
+borda(.11) -> ingest:8090                    obtido=PASSA esperado=PASSA  [OK]
+borda(.11) -> painel:443                     obtido=PASSA esperado=PASSA  [OK]
+borda(.11) -> banco:5432                     obtido=PASSA esperado=PASSA  [OK]
+peer desconhecido(.77) -> ingest:8090        obtido=PASSA esperado=PASSA  [OK]
+admin(.100) -> banco:5432                    obtido=PASSA esperado=PASSA  [OK]
+painel(.10) -> banco:5432                    obtido=PASSA esperado=PASSA  [OK]
+operador(.50) -> banco:5432                  obtido=PASSA esperado=PASSA  [OK]
+ingest(.20) -> banco:5432                    obtido=PASSA esperado=PASSA  [OK]
+admin(.100) -> hub SSH:22                    obtido=PASSA esperado=PASSA  [OK]
+peer desconhecido(.77) -> hub SSH:22         obtido=PASSA esperado=PASSA  [OK]
+borda(.11) -> hub SSH:22                     obtido=PASSA esperado=PASSA  [OK]
+
+=== B) COM vpn/nftables.conf (so o permitido deve passar) ===
+borda(.11) -> ingest:8090                    obtido=PASSA esperado=PASSA  [OK]
+borda(.11) -> painel:443                     obtido=BLOQUEADO esperado=BLOQUEADO  [OK]
+borda(.11) -> banco:5432                     obtido=BLOQUEADO esperado=BLOQUEADO  [OK]
+peer desconhecido(.77) -> ingest:8090        obtido=BLOQUEADO esperado=BLOQUEADO  [OK]
+admin(.100) -> banco:5432                    obtido=PASSA esperado=PASSA  [OK]
+painel(.10) -> banco:5432                    obtido=PASSA esperado=PASSA  [OK]
+operador(.50) -> banco:5432                  obtido=BLOQUEADO esperado=BLOQUEADO  [OK]
+ingest(.20) -> banco:5432                    obtido=BLOQUEADO esperado=BLOQUEADO  [OK]
+admin(.100) -> hub SSH:22                    obtido=PASSA esperado=PASSA  [OK]
+peer desconhecido(.77) -> hub SSH:22         obtido=BLOQUEADO esperado=BLOQUEADO  [OK]
+borda(.11) -> hub SSH:22                     obtido=BLOQUEADO esperado=BLOQUEADO  [OK]
+
+Contadores de pacotes descartados (log/counter do nftables):
+  		log prefix "va-drop-in: " counter packets 4 bytes 240 drop
+  		log prefix "va-drop-fwd: " counter packets 10 bytes 600 drop
+
+RESUMO: linha de base falhas=0 | com regras falhas=0  (0 = segmentacao efetiva conforme o desenho)

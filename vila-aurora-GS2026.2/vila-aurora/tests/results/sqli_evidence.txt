@@ -1,0 +1,24 @@
+=== ANTES: painel vulneravel (sem login, DB com acesso total) ===
+P1 erro de sintaxe                 payload="'"
+   -> HTTP 500 | linhas~0 | vazou dados/todos os registros: False | erro detalhado exposto: True
+P2 tautologia                      payload="x' OR 1=1 --"
+   -> HTTP 200 | linhas~298 | vazou dados/todos os registros: True | erro detalhado exposto: False
+P3 UNION (extrai tabela users)     payload="zzz' UNION SELECT email, nome, cpf_sintetico, role FROM users --"
+   -> HTTP 200 | linhas~8 | vazou dados/todos os registros: True | erro detalhado exposto: False
+P4 enumeracao de schema            payload="zzz' UNION SELECT name, sql, '', '' FROM sqlite_master --"
+   -> HTTP 200 | linhas~1 | vazou dados/todos os registros: True | erro detalhado exposto: False
+
+=== DEPOIS: painel corrigido (login com senha + TOTP) ===
+busca legitima 'u_' -> HTTP 200 | linhas de tabela: 50
+P1 erro de sintaxe                 -> HTTP 400 | vazou: False | trace/SQL exposto: False
+P2 tautologia                      -> HTTP 403 | vazou: False | trace/SQL exposto: False
+P3 UNION (extrai tabela users)     -> HTTP 403 | vazou: False | trace/SQL exposto: False
+P4 enumeracao de schema            -> HTTP 403 | vazou: False | trace/SQL exposto: False
+
+=== Causa raiz isolada (sem WAF e sem validacao): mesma consulta parametrizada, mesmos payloads ===
+P1 erro de sintaxe                 -> 0 linhas, vazou: False
+P2 tautologia                      -> 0 linhas, vazou: False
+P3 UNION (extrai tabela users)     -> 0 linhas, vazou: False
+P4 enumeracao de schema            -> 0 linhas, vazou: False
+
+RESUMO: vulneravel vazou em 3/4 payloads | corrigido bloqueou 4/4 na borda da aplicacao | causa raiz neutraliza 4/4
